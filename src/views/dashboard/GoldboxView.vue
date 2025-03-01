@@ -30,12 +30,14 @@
                                     <v-col cols="12" md="6" class="my-2">
                                         <span>وزن طلا (گرم)</span>
                                         <v-text-field v-model="buyInfo.goldWeight" variant="outlined"
-                                            color="rgba(135, 104, 36, 1)" density="compact"></v-text-field>
+                                            color="rgba(135, 104, 36, 1)" density="compact"
+                                            @input="buyGoldweightConvert"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" md="6" class="my-2">
                                         <span>مبلغ (ریال)</span>
                                         <v-text-field v-model="buyInfo.goldprice" variant="outlined"
-                                            color="rgba(135, 104, 36, 1)" density="compact"></v-text-field>
+                                            color="rgba(135, 104, 36, 1)" density="compact"
+                                            @input="buyGoldpriceConvert"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" class="my-2">
                                         <div class="d-flex justify-center">
@@ -67,16 +69,15 @@
                                 <v-row>
                                     <v-col cols="12" md="6" class="my-2">
                                         <span>وزن طلا (گرم)</span>
-                                        <v-text-field variant="outlined" color="rgba(135, 104, 36, 1)" density="compact"
-                                            v-model="sellInfo.goldWeight" @input="goldConvertSell"
-                                            :rules="weightRules"></v-text-field>
+                                        <v-text-field v-model="sellInfo.goldWeight" variant="outlined"
+                                            color="rgba(135, 104, 36, 1)" density="compact"
+                                            @input="sellGoldweightConvert" :rules="weightRules"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" md="6" class="my-2">
                                         <span>مبلغ (ریال)</span>
-                                        <v-text-field variant="outlined" color="rgba(135, 104, 36, 1)" density="compact"
-                                            disabled>{{
-                                                sellInfo.goldPrice
-                                            }}</v-text-field>
+                                        <v-text-field v-model="sellInfo.goldPrice" variant="outlined"
+                                            color="rgba(135, 104, 36, 1)" density="compact"
+                                            @input="sellGoldpriceConvert"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" class="my-2">
                                         <div class="d-flex justify-center">
@@ -400,29 +401,29 @@ const GetGoldPrice = async () => {
 }
 
 
-// const goldConvert = () => {
-//     buyInfo.value.goldprice = buyInfo.value.goldWeight * goldPriceLive.value.buyPrice;
-// }
+const buyGoldpriceConvert = () => {
+    buyInfo.value.goldWeight = (buyInfo.value.goldprice / goldPriceLive.value.buyPrice).toFixed(2);
+}
 
 
-watch(
-    () => [buyInfo.value.goldWeight, buyInfo.value.goldprice],
-    ([newWeight, newPrice], [oldWeight, oldPrice]) => {
-        // تبدیل مقادیر خالی به 0
-        const weight = newWeight === '' ? 0 : parseFloat(newWeight);
-        const price = newPrice === '' ? 0 : parseFloat(newPrice);
+const buyGoldweightConvert = () => {
+    buyInfo.value.goldprice = parseInt(buyInfo.value.goldWeight * goldPriceLive.value.buyPrice);
+}
 
-        if (newWeight !== oldWeight) {
-            buyInfo.value.goldprice = weight * goldPriceLive.value.buyPrice;
-        } else if (newPrice !== oldPrice) {
-            if (price < 100000) {
-                buyInfo.value.goldWeight = 0;
-            } else {
-                buyInfo.value.goldWeight = price / goldPriceLive.value.buyPrice;
-            }
-        }
-    }
-);
+
+const sellGoldpriceConvert = () => {
+    sellInfo.value.goldWeight = (sellInfo.value.goldPrice / goldPriceLive.value.sellPrice).toFixed(2)
+}
+
+const sellGoldweightConvert = () => {
+    sellInfo.value.goldPrice = parseInt(sellInfo.value.goldWeight * goldPriceLive.value.sellPrice)
+}
+
+
+
+
+
+
 
 
 const goldConvertSell = () => {
@@ -616,15 +617,6 @@ onMounted(() => {
             router.push({ name: 'failed', query: verifyDetail.value });
         }
     }
-})
-
-
-// watch(buyInfo.value, () => {
-//     goldConvert();
-// })
-
-watch(goldPriceLive.value, () => {
-    console.log('price changed')
 })
 
 

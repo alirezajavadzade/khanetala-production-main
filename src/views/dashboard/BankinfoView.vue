@@ -51,7 +51,7 @@
                             }} ریال
                         </p> -->
 
-                        <p class="price my-1" v-else>{{ formatNumber(wallet.TotalAssets) }}</p>
+                        <p class="price my-1" v-else>{{ formatNumber(wallet.TotalAssets) }} ریال</p>
                     </div>
                 </div>
             </v-col>
