@@ -105,7 +105,8 @@ const user = ref({
 const GetUser = async () => {
     try {
         const response = await AuthService.Profile();
-        user.value.birthDate = response.birthDate;
+        let x = response.birthDate.split('');
+        user.value.birthDate = `${x[0]}${x[1]}${x[2]}${x[3]}/${x[4]}${x[5]}/${x[6]}${x[7]}`
         user.value.firstName = response.firstName;
         user.value.lastName = response.lastName;
         user.value.fatherName = response.fatherName;
