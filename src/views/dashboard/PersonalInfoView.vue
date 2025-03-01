@@ -119,6 +119,7 @@ const GetUser = async () => {
         user.value.bankName = response.bankAccounts[0].name;
         return response
     } catch (error) {
+        
         console.log(error)
         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
         alertError.value = true;
