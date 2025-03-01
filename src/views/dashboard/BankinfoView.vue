@@ -210,6 +210,10 @@ const filter = ref([
         value: 'failed',
     },
     {
+        text: 'نامشخص',
+        value: 'pending',
+    },
+    {
         text: 'همه',
         value: '',
     },
