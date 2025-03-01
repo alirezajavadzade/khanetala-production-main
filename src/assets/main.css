@@ -1,0 +1,188 @@
+#app {
+  background-color: rgba(254, 253, 251, 1);
+}
+
+body {
+  font-family: "Modam";
+  direction: rtl;
+  background-color: rgba(254, 253, 251, 1);
+}
+
+.vpd-input-group {
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+  border-radius: 4px;
+}
+
+.vpd-input-group label {
+  border-radius: 0 4px 4px 0;
+}
+
+
+.vpd-input-group input {
+  padding: 8px 10px !important;
+  border: 0 !important;
+}
+
+.v-messages__message {
+  text-align: start;
+}
+
+.v-stepper-item__avatar.v-avatar .v-icon {
+  font-size: 10px !important;
+}
+
+.v-avatar.v-avatar--density-default {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.v-field {
+  border-radius: 8px !important;
+}
+
+.v-btn {
+  border-radius: 8px !important;
+  height: 50px !important;
+}
+
+
+
+
+.k-stepper {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.k-stepper .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* active */
+.k-stepper .step.active>div {
+  border-color: rgba(176, 134, 59, 1) !important;
+  box-shadow: 0px 0px 2px 0px rgba(175, 139, 74, 0.84);
+}
+
+.k-stepper .step.active span {
+  background-color: rgba(176, 134, 59, 1) !important;
+}
+
+.k-stepper .step.active p {
+  color: rgba(176, 134, 59, 1) !important;
+}
+
+
+/* verified */
+.k-stepper .step.verified>div {
+  border-color: #00603a !important;
+  box-shadow: 0px 0px 2px 0px #00603a;
+}
+
+.k-stepper .step.verified span {
+  background-color: #00603a !important;
+}
+
+.k-stepper .step.verified p {
+  color: #00603a !important;
+}
+
+
+.k-stepper .step>div {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(189, 189, 189, 1);
+  border-radius: 100%;
+  padding: 2px;
+  margin-bottom: 0.1rem;
+}
+
+.k-stepper .step span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background-color: rgba(189, 189, 189, 1);
+}
+
+.k-stepper .step span {
+  font-size: 10px;
+  color: #fff;
+}
+
+.k-stepper .step p {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.k-stepper .divider {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(189, 189, 189, 1);
+  margin-top: 7px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.k-stepper .divider.active {
+  background-color: rgba(176, 134, 59, 1) !important;
+}
+
+.k-stepper .divider.verified {
+  background-color: #00603a !important;
+}
+
+.alert-animatiton {
+  animation: fade-in-out 5s forwards;
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.first-select .v-field__input {
+  padding: 2px !important;
+  font-size: 14px !important;
+}
+
+.second-select .v-field__input {
+  padding: 2px !important;
+  font-size: 14px !important;
+}
+
+.third-select .v-field__input {
+  padding: 2px !important;
+  font-size: 14px !important;
+}
+
+.v-tab--selected {
+  color: #00603a !important;
+  border-bottom: 2px solid #00603a !important;
+}
+
+.transaction-table thead {
+  background-color: #009358 !important;
+  color: #fff;
+}

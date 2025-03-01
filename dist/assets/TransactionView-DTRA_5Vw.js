@@ -1,0 +1,1 @@
+import{_ as t,m as n,e as o,o as r}from"./index-GbV0-74n.js";const s={};function a(c,e){return r(),n("div",null,e[0]||(e[0]=[o("h1",null,"test",-1)]))}const _=t(s,[["render",a]]);export{_ as default};
