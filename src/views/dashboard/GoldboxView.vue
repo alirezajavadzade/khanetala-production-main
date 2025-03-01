@@ -309,11 +309,15 @@ const Transactionheaders = ref([
 const filter = ref([
     {
         text: 'موفق',
-        value: 'completed',
+        value: 'success',
     },
     {
         text: 'ناموفق',
         value: 'failed',
+    },
+    {
+        text: 'نامشخص',
+        value: 'pending',
     },
     {
         text: 'همه',
@@ -362,7 +366,6 @@ const paySellInfo = ref({
 });
 
 const filterTransaction = ref({
-    type: '',
     status: '',
 });
 
@@ -540,9 +543,8 @@ const filterChange = (filterValue) => {
 
 const sellTransaction = async () => {
     try {
-        filterTransaction.value.type = 'sell';
         TransactionLoading.value = true;
-        const response = await TradeService.Transactions(filterTransaction.value);
+        const response = await TradeService.GoldBoxSellTransactions(filterTransaction.value);
         SellTransactionItems.value = response;
         return response
     } catch (error) {
@@ -558,9 +560,8 @@ const sellTransaction = async () => {
 
 const buyTransaction = async () => {
     try {
-        filterTransaction.value.type = 'buy';
         TransactionLoading.value = true;
-        const response = await TradeService.Transactions(filterTransaction.value);
+        const response = await TradeService.GoldBoxBuyTransactions(filterTransaction.value);
         BuyTransactionItems.value = response;
         return response
     } catch (error) {
