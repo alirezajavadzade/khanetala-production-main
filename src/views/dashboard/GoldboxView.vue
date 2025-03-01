@@ -48,7 +48,7 @@
                             <v-col md="3" class="my-2 d-none d-md-flex">
                                 <div class="price-live-card">
                                     <div class="d-flex justify-space-between my-2">
-                                        <span class="price-change">{{ goldPriceLive.change }}</span>
+                                        <span class="price-change">{{ goldPriceLive.change }} %</span>
                                         <span class="live-tag">live</span>
                                     </div>
                                     <span class="my-2 live-price-text">قیمت لحظه ای طلا 18 عیار</span>
@@ -89,7 +89,7 @@
                             <v-col md="3" class="my-2 d-none d-md-flex">
                                 <div class="price-live-card">
                                     <div class="d-flex justify-space-between my-2">
-                                        <span class="price-change">{{ goldPriceLive.change }}</span>
+                                        <span class="price-change">{{ goldPriceLive.change }} %</span>
                                         <span class="live-tag">live</span>
                                     </div>
                                     <span class="my-2 live-price-text">قیمت لحظه ای طلا 18 عیار</span>

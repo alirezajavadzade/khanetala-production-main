@@ -16,13 +16,13 @@ const TradeService = {
 
     async GoldBoxBuyTransactions(filterTransactions) {
         const body = JSON.stringify(filterTransactions);
-        const response = await VerifyTemplate.post("/selltransactions", body);
+        const response = await VerifyTemplate.post("/buytransactions", body);
         return response.data;
     },
 
     async GoldBoxSellTransactions(filterTransactions) {
         const body = JSON.stringify(filterTransactions);
-        const response = await VerifyTemplate.post("/buytransactions", body);
+        const response = await VerifyTemplate.post("/selltransactions", body);
         return response.data;
     },
 
