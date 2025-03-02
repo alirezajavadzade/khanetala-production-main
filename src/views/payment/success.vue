@@ -16,8 +16,12 @@
                     <p>{{ paymentDetail.transaction.totalPrice }}</p>
                 </div>
                 <div class="k-row">
-                    <p>تاریخ/زمان:</p>
+                    <p>تاریخ:</p>
                     <p>{{ paymentDetail.transaction.date }}</p>
+                </div>
+                <div class="k-row">
+                    <p>زمان:</p>
+                    <p>{{ paymentDetail.transaction.time }}</p>
                 </div>
                 <div class="k-row">
                     <p>کارت مبدا:</p>
@@ -27,7 +31,6 @@
                     <p>شناسه پرداخت:</p>
                     <p>{{ paymentDetail.referenceID }}</p>
                 </div>
-                
             </div>
             <div>
                 <v-btn color="#876824" class="mt-2" @click="backHome">بازگشت به صفحه اصلی {{ timer }}</v-btn>
@@ -44,7 +47,15 @@ import { useRoute } from 'vue-router';
 
 
 const timer = ref('10');
-const paymentDetail = ref({});
+const paymentDetail = ref({
+    referenceID: '-',
+    bank: '-',
+    transaction: {
+        totalPrice: '-',
+        date: '-',
+        time: '-',
+    },
+});
 const errorMsg = ref('');
 const alertError = ref(false);
 const route = useRoute();
@@ -58,7 +69,13 @@ const backHome = () => {
 
 
 onMounted(() => {
-    paymentDetail.value = history.state;
+    paymentDetail.value.bank = history.state.bank;
+    paymentDetail.value.referenceID = history.state.referenceID;
+    paymentDetail.value.transaction.date = history.state.transaction.date;
+    paymentDetail.value.transaction.time = history.state.transaction.time;
+    paymentDetail.value.transaction.totalPrice = history.state.transaction.totalPrice ;
+
+
     const interval = setInterval(() => {
         if (timer.value > 0) {
             timer.value--;
