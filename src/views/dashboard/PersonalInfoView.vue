@@ -107,19 +107,18 @@ const GetUser = async () => {
         const response = await AuthService.Profile();
         let x = response.birthDate.split('');
         user.value.birthDate = `${x[0]}${x[1]}${x[2]}${x[3]}/${x[4]}${x[5]}/${x[6]}${x[7]}`
-        user.value.firstName = response.firstName;
-        user.value.lastName = response.lastName;
-        user.value.fatherName = response.fatherName;
-        user.value.officeName = response.officeName;
-        user.value.cardNumber = response.bankAccounts[0].cardNumber;
-        user.value.phoneNumber = response.phoneNumber;
-        user.value.nationalCode = response.nationalCode;
-        user.value.gender = response.gender;
-        user.value.shebaNumber = response.bankAccounts[0].shebaNumber;
-        user.value.bankName = response.bankAccounts[0].name;
+        user.value.firstName = response?.firstName;
+        user.value.lastName = response?.lastName;
+        user.value.fatherName = response?.fatherName;
+        user.value.officeName = response?.officeName;
+        user.value.cardNumber = response?.bankAccounts[0]?.cardNumber;
+        user.value.phoneNumber = response?.phoneNumber;
+        user.value.nationalCode = response?.nationalCode;
+        user.value.gender = response?.gender;
+        user.value.shebaNumber = response?.bankAccounts[0]?.shebaNumber;
+        user.value.bankName = response?.bankAccounts[0]?.name;
         return response
     } catch (error) {
-        
         console.log(error)
         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
         alertError.value = true;
