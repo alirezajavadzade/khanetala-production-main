@@ -27,6 +27,7 @@
                     <p>شناسه پرداخت:</p>
                     <p>{{ paymentDetail.referenceID }}</p>
                 </div>
+                
             </div>
             <div>
                 <v-btn color="#876824" class="mt-2" @click="backHome">بازگشت به صفحه اصلی {{ timer }}</v-btn>
