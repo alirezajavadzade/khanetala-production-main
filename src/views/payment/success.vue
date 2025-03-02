@@ -9,23 +9,23 @@
                 <p>با تشکر از خرید شما</p>
                 <div class="k-row">
                     <p>عنوان:</p>
-                    <p>خرید طلا</p>
+                    <p>خرید از مجموعه خانه طلا</p>
                 </div>
                 <div class="k-row">
                     <p>مبلغ:</p>
-                    <p>خرید طلا</p>
+                    <p>{{ paymentDetail.totalPrice }}</p>
                 </div>
                 <div class="k-row">
                     <p>تاریخ/زمان:</p>
-                    <p>خرید طلا</p>
+                    <p>{{ paymentDetail.date }}</p>
                 </div>
                 <div class="k-row">
                     <p>کارت مبدا:</p>
-                    <p>خرید طلا</p>
+                    <p>{{ paymentDetail.bank }}</p>
                 </div>
                 <div class="k-row border-0">
                     <p>شناسه پرداخت:</p>
-                    <p>خرید طلا</p>
+                    <p>{{ paymentDetail.referenceID }}</p>
                 </div>
             </div>
             <div>
@@ -43,6 +43,7 @@ import { useRoute } from 'vue-router';
 
 
 const timer = ref('10');
+const paymentDetail = ref({});
 const errorMsg = ref('');
 const alertError = ref(false);
 const route = useRoute();
@@ -53,47 +54,10 @@ const backHome = () => {
     router.push('./')
 }
 
-// const VerifyTransaction = async (zarinpal) => {
-//     try {
-//         const response = await TradeService.VerifyTransaction(zarinpal);
-//         return response
-//     } catch (error) {
-//         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
-//         alertError.value = true;
-//         setTimeout(() => {
-//             alertError.value = false;
-//         }, 10000)
-//     }
-// }
-
-
-// const VerifyDeposit = async (zarinpal) => {
-//     try {
-//         const response = await TradeService.VerifyDepositWallet(zarinpal);
-//         return response
-//     } catch (error) {
-//         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
-//         alertError.value = true;
-//         setTimeout(() => {
-//             alertError.value = false;
-//         }, 10000)
-//     }
-// }
 
 
 onMounted(() => {
-    console.log(route.query)
-    // const zarinpal = ref({
-    //     authority: route.query.Authority,
-    //     status: route.query.Status,
-    // });
-
-    // if (route.query.type == 'wallet') {
-    //     VerifyDeposit(zarinpal);
-    // } else {
-    //     VerifyTransaction(zarinpal);
-    // }
-    // VerifyTransaction();
+    paymentDetail.value = history.state;
     const interval = setInterval(() => {
         if (timer.value > 0) {
             timer.value--;

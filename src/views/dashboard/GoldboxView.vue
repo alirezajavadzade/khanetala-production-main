@@ -631,9 +631,9 @@ onMounted(() => {
     if (zarinpal.value.authority && zarinpal.value.status) {
         VerifyTransaction(zarinpal.value);
         if (zarinpal.value.status === "OK") {
-            router.push({ name: 'success', query: verifyDetail.value });
+            router.push({ name: 'success', state: verifyDetail.value });
         } else {
-            router.push({ name: 'failed', query: verifyDetail.value });
+            router.push({ name: 'failed', state: verifyDetail.value });
         }
     }
 })
