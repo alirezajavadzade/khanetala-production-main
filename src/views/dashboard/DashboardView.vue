@@ -1,6 +1,6 @@
 <template>
   <v-row class="mt-5">
-    <v-col cols="12" md="4">
+    <!-- <v-col cols="12" md="4">
       <div class="d-card">
         <div class="d-flex justify-space-between">
           <span class="k-text">موجودی کیف پول</span>
@@ -40,52 +40,96 @@
     <v-col cols="12" md="4">
       <div class="d-card-value">
         <apexchart :options="chartOptions" :series="series" type="pie"></apexchart>
-        <!-- <div class="d-flex justify-space-between">
-          <div class="d-flex flex-column">
-            <div class="d-flex">
-              <ArrowIcon />
-              <span class="title">میزان سود ماهانه</span>
-            </div>
-            <p class="price">
-              120,000 تومان
-            </p>
-          </div>
-          <div class="d-flex flex-column align-center">
-            <span class="price-per">+28 درصد</span>
-            <linechartIcon />
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div class="d-flex justify-space-between">
-          <div class="d-flex flex-column">
-            <div class="d-flex">
-              <ArrowIcon />
-              <span class="title">میزان خرید ماهانه</span>
-            </div>
-            <p class="price">
-              5,000,000 تومان
-            </p>
-          </div>
-          <div class="d-flex flex-column align-center">
-            <span class="price-per">+10 درصد</span>
-            <linechartIcon />
-          </div>
-        </div> -->
       </div>
     </v-col>
     <v-col cols="12">
       <div class="d-card-value">
         <apexchart :options="areaChartOptions" :series="areaSeries" type="area"></apexchart>
+      </div>
+    </v-col> -->
 
+
+    <v-col cols="6" md="3" class="my-1">
+      <div class="k-card">
+        <div class="icon-box">
+          <WalletMoneyIcon class="icon" />
+        </div>
+        <div class="d-flex flex-column align-center">
+          <p class="title mx-3">کیف پول</p>
+          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
+          <p class="number" v-else>120,000,000</p>
+        </div>
+      </div>
+    </v-col>
+    <v-col cols="6" md="3" class="my-1">
+      <div class="k-card">
+        <div class="icon-box">
+          <dollarIcon class="icon" />
+        </div>
+        <div class="d-flex flex-column align-center">
+          <p class="title mx-3">دارایی طلا</p>
+          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
+          <p class="number" v-else>{{ wallet.walletWeight }} گرم</p>
+        </div>
+      </div>
+    </v-col>
+    <v-col cols="6" md="3" class="my-1">
+      <div class="k-card">
+        <div class="icon-box">
+          <chartIcon class="icon" />
+        </div>
+        <div class="d-flex flex-column align-center">
+          <p class="title mx-3">دارایی کل</p>
+          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
+          <p class="number" v-else>0 ریال</p>
+        </div>
+      </div>
+    </v-col>
+    <v-col cols="6" md="3" class="my-1">
+      <div class="k-card">
+        <div class="icon-box">
+          <DiagramUpIcon class="icon" />
+        </div>
+        <div class="d-flex flex-column align-center">
+          <p class="title mx-3">سود ماهانه</p>
+          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
+          <p class="number" v-else>23.6 ٪</p>
+        </div>
+      </div>
+    </v-col>
+    <!-- charts -->
+    <v-col cols="12" md="6" class="my-1">
+      <div class="chart-card">
+        <h3>خرید در ماه</h3>
+        <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+      </div>
+    </v-col>
+    <v-col cols="12" md="6" class="my-1">
+      <div class="chart-card">
+        <h3>قیمت لحظه ای طلا</h3>
+        <Line :options="chartOptions2" :data="chartData2" />
+      </div>
+    </v-col>
+    <v-col cols="12" md="3" class="my-1">
+      <div class="chart-card">
+        <h3>میزان دارایی شما</h3>
+        <Doughnut :options="chartOptions3" :data="chartData3" />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script setup>
-import walletIcon from '@/assets/images/icons/walletIcon.vue'
 import { ref, onMounted } from 'vue';
 import AuthService from '@/service/auth/auth';
+import chartIcon from '@/assets/images/icons/Chart.vue'
+import dollarIcon from '@/assets/images/icons/Dollar.vue'
+import DiagramUpIcon from '@/assets/images/icons/DiagramUp.vue'
+import WalletMoneyIcon from '@/assets/images/icons/WalletMoney.vue'
+import { Bar, Line, Doughnut } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement)
 
 
 const errorMsg = ref('');
@@ -95,51 +139,108 @@ const wallet = ref({
   walletWeight: 0,
   walletId: '',
 });
-const walletLoading = ref(false);
-const series = ref([40, 60,]); // مقادیر داده‌ها
+const chartData = ref({
+  labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+  datasets: [{ data: [40, 20, 12, 50, 96, 12, 8, 70, 59, 63, 48, 50], backgroundColor: '#00603A', }],
+})
+let delayed;
 const chartOptions = ref({
-  colors: ['#00603A', '#F5F1E9'],
-  chart: {
-    type: 'donut',
-  },
-  labels: ['کیف پول طلایی', 'کیف پول ریالی'],
-  responsive: [{
-    breakpoint: 480,
-    options: {
-      chart: {
-        width: 300,
-      },
+  responsive: true,
+  animation: {
+    onComplete: () => {
+      delayed = true;
     },
-    plotOptions: {
-      pie: {
-        donut: {
-          size: '65%'
-        }
+    delay: (context) => {
+      let delay = 0;
+      if (context.type === 'data' && context.mode === 'default' && !delayed) {
+        delay = context.dataIndex * 300 + context.datasetIndex * 100;
       }
+      return delay;
+    },
+  },
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true
     }
-  }],
-});
+  }
+})
+
+const chartData2 = ref({
+  labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+  datasets: [
+    {
+      label: 'Data One',
+      backgroundColor: '#00603A',
+      data: [40, 20, 12, 50, 96, 12, 8, 70, 59, 63, 48, 50],
+    }
+  ]
+})
+const chartOptions2 = ref({
+  responsive: true,
+  animation: {
+    onComplete: () => {
+      delayed = true;
+    },
+    delay: (context) => {
+      let delay = 0;
+      if (context.type === 'data' && context.mode === 'default' && !delayed) {
+        delay = context.dataIndex * 300 + context.datasetIndex * 100;
+      }
+      return delay;
+    },
+  },
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true
+    }
+  }
+})
 
 
-const areaSeries = ref([
-  {
-    name: 'قیمت لحظه ای طلا',
-    data: [37086100, 33090710, 32566800, 33202330, 35129410, 37382000, 42696510, 44409480, 49010790, 51634900, 62999220],
-  },
-]);
 
-const areaChartOptions = ref({
-  colors: ['#00603A', '#F5F1E9'],
-  chart: {
-    type: 'area',
+
+const chartData3 = ref({
+  labels: ['دارایی طلایی', 'دارایی ریالی',],
+  datasets: [
+    {
+      backgroundColor: ['#00603A', '#008651'],
+      data: [20, 80]
+    }
+  ]
+})
+const chartOptions3 = ref({
+  responsive: true,
+  animation: {
+    onComplete: () => {
+      delayed = true;
+    },
+    delay: (context) => {
+      let delay = 0;
+      if (context.type === 'data' && context.mode === 'default' && !delayed) {
+        delay = context.dataIndex * 300 + context.datasetIndex * 100;
+      }
+      return delay;
+    },
   },
-  toolbar: {
-    show: false,
-  },
-  xaxis: {
-    categories: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن'],
-  },
-});
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true
+    }
+  }
+})
+
+
+
+const walletLoading = ref(false);
 
 const GetWallet = async () => {
   try {
@@ -284,5 +385,46 @@ onMounted(() => {
   justify-content: flex-end;
   min-height: 42px;
   margin: 1.5rem 0;
+}
+
+.k-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.k-card .icon-box {
+  height: 4rem;
+  width: 4rem;
+  background-color: rgba(173, 239, 198, 0.25);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.k-card .number {
+  font-weight: 700;
+  margin-top: 0.4rem;
+}
+
+.k-card .title {
+  font-size: 18px;
+  font-weight: 300;
+  margin-top: 0.4rem;
 }
 </style>
