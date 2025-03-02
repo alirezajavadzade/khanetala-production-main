@@ -31,7 +31,7 @@
                                         <span>وزن طلا (گرم)</span>
                                         <v-text-field v-model="buyInfo.goldWeight" variant="outlined"
                                             color="rgba(135, 104, 36, 1)" density="compact"
-                                            @input="buyGoldweightConvert"></v-text-field>
+                                            @input="buyGoldweightConvert" :rules="validateWeight"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" md="6" class="my-2">
                                         <span>مبلغ (ریال)</span>
@@ -402,33 +402,52 @@ const GetGoldPrice = async () => {
 
 
 const buyGoldpriceConvert = () => {
+    buyInfo.value.goldprice = buyInfo.value.goldprice.replace(/[^0-9]/g, '');
     buyInfo.value.goldWeight = (buyInfo.value.goldprice / goldPriceLive.value.buyPrice).toFixed(2);
 }
 
 
 const buyGoldweightConvert = () => {
+    buyInfo.value.goldWeight = buyInfo.value.goldWeight.replace(/[^0-9.]/g, '');
+    const parts = buyInfo.value.goldWeight.split('.');
+    if (parts.length > 1) {
+        // اگر بیش از یک نقطه وجود دارد، فقط یک نقطه مجاز است
+        buyInfo.value.goldWeight = parts[0] + '.' + parts.slice(1).join('');
+    }
+
+    if (parts.length > 1 && parts[1].length > 2) {
+        buyInfo.value.goldWeight = parts[0] + '.' + parts[1].slice(0, 2);
+    }
+
+
     buyInfo.value.goldprice = parseInt(buyInfo.value.goldWeight * goldPriceLive.value.buyPrice);
 }
 
-
 const sellGoldpriceConvert = () => {
+    sellInfo.value.goldPrice = sellInfo.value.goldPrice.replace(/[^0-9]/g, '');
     sellInfo.value.goldWeight = (sellInfo.value.goldPrice / goldPriceLive.value.sellPrice).toFixed(2)
 }
 
 const sellGoldweightConvert = () => {
+    sellInfo.value.goldWeight = sellInfo.value.goldWeight.replace(/[^0-9.]/g, '');
+    const parts = sellInfo.value.goldWeight.split('.');
+    if (parts.length > 1) {
+        // اگر بیش از یک نقطه وجود دارد، فقط یک نقطه مجاز است
+        sellInfo.value.goldWeight = parts[0] + '.' + parts.slice(1).join('');
+    }
+
+    if (parts.length > 1 && parts[1].length > 2) {
+        sellInfo.value.goldWeight = parts[0] + '.' + parts[1].slice(0, 2);
+    }
+
     sellInfo.value.goldPrice = parseInt(sellInfo.value.goldWeight * goldPriceLive.value.sellPrice)
 }
 
 
-
-
-
-
-
-
-const goldConvertSell = () => {
-    sellInfo.value.goldPrice = sellInfo.value.goldWeight * goldPriceLive.value.sellPrice;
-}
+const validateWeight = [
+    (v) => !!v || 'مقدار ورودی نمی‌تواند خالی باشد', // بررسی خالی نبودن فیلد
+    (v) => /^\d+(\.\d{1,2})?$/.test(v) || 'فقط عدد مجاز است و حداکثر ۲ رقم اعشار', // بررسی
+];
 
 
 const CreateBuy = async () => {
