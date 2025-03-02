@@ -129,18 +129,22 @@
 
         <v-dialog v-model="depositDialog" width="auto">
             <v-card min-width="350" max-width="400" class="cart-Dialog">
-                <div class="title my-1">
+                <div class="my-1">
                     <p>مبلغ مورد نظر را جهت واریز وارد نمایید</p>
                 </div>
-                <v-form ref="form" v-model="isValidPrice" @submit.prevent="deposit">
+                <v-form ref="form" v-model="isValidcharge" @submit.prevent="deposit">
                     <v-text-field v-model="priceAmount" variant="outlined" color="rgba(135, 104, 36, 1)"
                         density="compact" label="مبلغ (ریال)" class="mb-0 mt-2" :rules="validatePrice"
                         @input="limitInput"></v-text-field>
                     <div v-if="priceAmount">
                         <p class="amount-word">{{ DepositeAmountInWords }}</p>
                     </div>
+                    <div class="title my-2">
+                        <InfoIcon />
+                        <p>حداقل مبلغ شارژ باید 100,000 تومان باشد</p>
+                    </div>
                     <v-btn type="submit" text="شارژ حساب" block color="#9D7E3B" variant="flat" class="submit-cart-btn"
-                        :disabled="!isValidPrice" :loading="depositLoading"></v-btn>
+                        :disabled="!isValidcharge" :loading="depositLoading"></v-btn>
                 </v-form>
             </v-card>
         </v-dialog>
@@ -177,6 +181,7 @@ import TradeService from '@/service/auth/trade';
 import { useRoute } from "vue-router";
 import router from '@/router';
 import { numberToWords } from '@persian-tools/persian-tools';
+import InfoIcon from '@/assets/images/icons/InfoIcon.vue';
 
 
 
@@ -260,7 +265,7 @@ const filterTransaction = ref({
 
 const paymentUrl = ref('');
 
-const verifyDetail = ref({})
+const verifyDetail = ref({});
 
 
 const GetWallet = async () => {
@@ -367,6 +372,12 @@ const validatePrice = [
     (v) => !!v || 'مقدار ورودی نمی‌تواند خالی باشد',
     (v) => /^\d+$/.test(v.replace(/,/g, '')) || 'فقط عدد مجاز است',
 ];
+
+
+const isValidcharge = computed(() => {
+    const amount = parseFloat(priceAmount.value.replace(/,/g, ''));
+    return amount >= 10000000;
+});
 
 
 const limitInput = () => {
@@ -670,6 +681,26 @@ onMounted(() => {
     padding: 2rem;
 }
 
+.cart-Dialog .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffe7e7;
+    color: #ff0000;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.cart-Dialog .title p {
+    margin: 0 0.3rem;
+    font-size: 12px;
+}
+
+.cart-Dialog svg {
+    filter: invert(19%) sepia(88%) saturate(7474%) hue-rotate(358deg) brightness(94%) contrast(109%);
+}
+
 .submit-cart-btn {
     height: 2.6rem !important;
 }
@@ -680,7 +711,7 @@ onMounted(() => {
 
 .amount-word {
     font-size: 12px;
-    color: red;
+    color: #b00020;
     padding-bottom: 0.5rem;
 }
 </style>

@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="m-2 d-flex flex-column align-start my-3">
                                         <p class="k-title">جنسیت :</p>
-                                        <p class="k-text">{{ user.gender == true ? 'خانم' : 'آقا' }}</p>
+                                        <p class="k-text">{{ user.gender == true ? 'آقا' : 'خانم' }}</p>
                                     </div>
                                 </div>
                             </div>
