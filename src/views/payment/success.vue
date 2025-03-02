@@ -13,11 +13,11 @@
                 </div>
                 <div class="k-row">
                     <p>مبلغ:</p>
-                    <p>{{ paymentDetail.totalPrice }}</p>
+                    <p>{{ paymentDetail.transaction.totalPrice }}</p>
                 </div>
                 <div class="k-row">
                     <p>تاریخ/زمان:</p>
-                    <p>{{ paymentDetail.date }}</p>
+                    <p>{{ paymentDetail.transaction.date }}</p>
                 </div>
                 <div class="k-row">
                     <p>کارت مبدا:</p>
