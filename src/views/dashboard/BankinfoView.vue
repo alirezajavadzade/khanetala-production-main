@@ -40,18 +40,33 @@
                                 goldPriceLive.buyPrice) }}ریال</p>
                         </div>
                     </div>
-                    <div class="asset-card">
-                        <p class="text">دارایی کل</p>
-                        <v-progress-circular v-if="walletLoading" :size="10" color="#fff"
-                            indeterminate></v-progress-circular>
+                    <div class="amount-card">
+                        <div class="d-flex justify-space-between">
+                            <p class="text">دارایی کل</p>
+                            <v-progress-circular v-if="walletLoading" :size="10" color="#fff"
+                                indeterminate></v-progress-circular>
 
 
-                        <!-- <p class="price my-1" v-else>{{ parseInt((wallet.goldWeight * goldPriceLive.buyPrice) +
+                            <!-- <p class="price my-1" v-else>{{ parseInt((wallet.goldWeight * goldPriceLive.buyPrice) +
                             (wallet.balance))
                             }} ریال
                         </p> -->
 
-                        <p class="price my-1" v-else>{{ formatNumber(wallet.TotalAssets) }} ریال</p>
+                            <p class="price my-1" v-else>{{ formatNumber(wallet.TotalAssets) }} ریال</p>
+                        </div>
+                        <div class="d-flex justify-space-between mt-2">
+                            <p class="text">در انتظار پرداخت</p>
+                            <v-progress-circular v-if="walletLoading" :size="10" color="#fff"
+                                indeterminate></v-progress-circular>
+
+
+                            <!-- <p class="price my-1" v-else>{{ parseInt((wallet.goldWeight * goldPriceLive.buyPrice) +
+                            (wallet.balance))
+                            }} ریال
+                        </p> -->
+
+                            <p class="price my-1" v-else>{{ formatNumber(wallet.blocked) }} ریال</p>
+                        </div>
                     </div>
                 </div>
             </v-col>
@@ -246,6 +261,7 @@ const wallet = ref({
     goldWeight: '-',
     goldprice: '-',
     TotalAssets: '-',
+    blocked:'-'
 })
 
 const formatNumber = (num) => {
@@ -275,6 +291,7 @@ const GetWallet = async () => {
         wallet.value.balance = response.balance;
         wallet.value.goldWeight = response.goldWeight;
         wallet.value.TotalAssets = response.totalAssets;
+        wallet.value.blocked = response.blocked;
         return response
     } catch (error) {
         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
@@ -669,6 +686,17 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.amount-card {
+    box-shadow: 4px 4px 12px 0px rgba(212, 205, 191, 0.4);
+    backdrop-filter: blur(12px);
+    padding: 12px 24px;
+    border-radius: 16px;
+    background-color: rgba(254, 253, 251, 0.6);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .asset-card {
