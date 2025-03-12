@@ -27,33 +27,6 @@ const currentLayout = computed(() => {
   return layouts[layoutName];
 });
 
-
-// const clearTokenAndLogout = () => {
-//   localStorage.removeItem("token");
-//   localStorage.removeItem("loginTime");
-//   router.push('/login')
-// };
-
-
-
-onMounted(() => {
-// const checkTokenExpiration = () => {
-//   const loginTime = Number(localStorage.getItem('loginTime'));
-//   if (!loginTime || isNaN(loginTime)) return;
-//   if (Date.now() - loginTime > 60 * 60 * 1000) {
-//     clearTokenAndLogout();
-//   }
-// };
-
-// checkTokenExpiration();
-
-// const intervalId = setInterval(checkTokenExpiration, 60 * 1000);
-
-// onUnmounted(() => {
-// clearInterval(intervalId);
-//   });
-});
-
 </script>
 
 

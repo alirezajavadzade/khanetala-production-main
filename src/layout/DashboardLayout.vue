@@ -201,7 +201,7 @@ const GetUser = async () => {
 
 const logout = () => {
     localStorage.removeItem("token")
-    router.push('/login')
+    router.replace('/login')
 }
 
 

@@ -135,7 +135,7 @@ const getInfo = async () => {
 
 
 const submitIdentityInfo = async () => {
-    router.push('/');
+    router.replace('/');
 }
 
 

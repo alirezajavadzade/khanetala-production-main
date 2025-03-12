@@ -487,7 +487,7 @@ const CompleteBuy = async (paymentMethod) => {
         const response = await TradeService.complateTransaction(paymentInfo.value);
         if (response.isFromWallet == true) {
             buyModal.value = false;
-            router.push('./')
+            router.replace('/')
         } else {
             invoice.value.paymentUrl = response.paymentUrl;
             invoice.value.invoiceId = response.invoiceId;

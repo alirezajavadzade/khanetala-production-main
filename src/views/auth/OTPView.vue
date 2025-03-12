@@ -88,9 +88,9 @@ const submitOTP = async () => {
         loading.value = true;
         const response = await AuthService.VerifyOTP(otp.value);
         if (response.userVerificationStatus == "SUCCESS") {
-            router.push('/');
+            router.replace('/');
         } else {
-            router.push('/Identity');
+            router.replace('/Identity');
         }
         return response
     } catch (error) {

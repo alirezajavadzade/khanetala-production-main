@@ -21,7 +21,7 @@ import Icon404 from '@/assets/images/icons/404.vue'
 import router from '@/router';
 
 const backHome = () => {
-    router.push('./')
+    router.replace('/')
 }
 
 </script>

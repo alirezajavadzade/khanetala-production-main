@@ -310,7 +310,7 @@ const submitIdentity = async () => {
         loading.value = true;
         const response = await AuthService.VerifyIdentity(identityForm.value);
         localStorage.setItem("userData", JSON.stringify(response.user))
-        router.push('/IdentityInfo');
+        router.replace('/IdentityInfo');
         return response
     } catch (error) {
         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';

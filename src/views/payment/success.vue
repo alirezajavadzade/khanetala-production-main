@@ -63,7 +63,7 @@ const route = useRoute();
 
 
 const backHome = () => {
-    router.push('./')
+    router.replace('/')
 }
 
 
@@ -73,7 +73,7 @@ onMounted(() => {
     paymentDetail.value.referenceID = history.state.referenceID;
     paymentDetail.value.transaction.date = history.state.transaction.date;
     paymentDetail.value.transaction.time = history.state.transaction.time;
-    paymentDetail.value.transaction.totalPrice = history.state.transaction.totalPrice ;
+    paymentDetail.value.transaction.totalPrice = history.state.transaction.totalPrice;
 
 
     const interval = setInterval(() => {

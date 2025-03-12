@@ -51,7 +51,7 @@ const alertError = ref(false);
 
 
 const backHome = () => {
-    router.push('./')
+    router.replace('/')
 }
 
 

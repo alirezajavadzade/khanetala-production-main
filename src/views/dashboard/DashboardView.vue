@@ -142,7 +142,6 @@ const wallet = ref({
   monthlyProfit: 0,
 });
 
-const walletLoading = ref(false);
 let delayed;
 
 const BuyInMonthChartData = ref({
@@ -195,12 +194,12 @@ const BuyInMonthChartOption = ref({
 })
 
 const MonthlyPriceChartData = ref({
-  labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+  labels: [],
   datasets: [
     {
       label: 'Data One',
       backgroundColor: '#00603A',
-      data: [40, 20, 12, 50, 96, 12, 8, 70, 59, 63, 48, 50],
+      data: [],
     }
   ]
 })
@@ -253,11 +252,11 @@ const MonthlyPriceChartOption = ref({
 
 
 const AssetsChartData = ref({
-  labels: ['دارایی طلایی', 'دارایی ریالی',],
+  labels: [],
   datasets: [
     {
       backgroundColor: ['#00603A', '#008651'],
-      data: [20, 80]
+      data: []
     }
   ]
 })
