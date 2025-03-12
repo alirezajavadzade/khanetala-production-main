@@ -1,7 +1,7 @@
 <template>
     <v-card class="auth-card" max-width="360" width="100%">
-        <v-alert v-if="alertError" color="error" border="bottom" elevation="2"
-            class="k-alert alert-animatiton" closable>
+        <v-alert v-if="alertError" color="error" border="bottom" elevation="2" class="k-alert alert-animatiton"
+            closable>
             {{ errorMsg }}
         </v-alert>
 
@@ -82,8 +82,8 @@ const submitPhone = async () => {
     try {
         loading.value = true;
         const response = await AuthService.Login(mobileNumber.value);
-        router.replace('/OTP')
-        return response
+        router.replace('/OTP');
+        // return response
     } catch (error) {
         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
         alertError.value = true;
@@ -179,12 +179,11 @@ const submitPhone = async () => {
 }
 
 .k-alert {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  font-size: 12px;
-  padding: 2px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 12px;
+    padding: 2px !important;
 }
-
 </style>

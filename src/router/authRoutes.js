@@ -1,26 +1,31 @@
+import OTPView from '../views/auth/OTPView.vue';
+import LoginView from '../views/auth/LoginView.vue';
+import IdentityView from '../views/auth/IdentityView.vue';
+import IdentityInfoView from '../views/auth/identityInfoView.vue'
+
 export default [
     {
         path: '/Login',
         name: 'Login',
-        component: () => import('../views/auth/LoginView.vue'),
+        component: LoginView,
         meta: { layout: "AuthenticationLayout", transition: 'fade' },
     },
     {
         path: '/OTP',
         name: 'OTP',
-        component: () => import('../views/auth/OTPView.vue'),
+        component: OTPView,
         meta: { layout: "AuthenticationLayout", transition: 'fade' },
     },
     {
         path: '/Identity',
         name: 'Identity',
-        component: () => import('../views/auth/IdentityView.vue'),
+        component: IdentityView,
         meta: { layout: "AuthenticationLayout", transition: 'fade' },
     },
     {
         path: '/IdentityInfo',
         name: 'IdentityInfo',
-        component: () => import('../views/auth/identityInfoView.vue'),
+        component: IdentityInfoView,
         meta: { layout: "AuthenticationLayout", transition: 'fade' },
     },
 
