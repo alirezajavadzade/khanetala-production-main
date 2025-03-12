@@ -145,6 +145,12 @@
                         <template v-slot:item.totalPrice="{ item }">
                             <p>{{ formatNumber(item.totalPrice) }}</p>
                         </template>
+                        <template v-slot:item.fromPhone="{ item }">
+                            <div class="">
+                                <v-chip :text="item.fromPhone == true ? 'تلفنی' : 'آنلاین'" color="#78909C"
+                                    size="small"></v-chip>
+                            </div>
+                        </template>
                     </v-data-table>
                 </v-tabs-window-item>
 
@@ -164,6 +170,12 @@
                         </template>
                         <template v-slot:item.totalPrice="{ item }">
                             <p>{{ formatNumber(item.totalPrice) }}</p>
+                        </template>
+                        <template v-slot:item.fromPhone="{ item }">
+                            <div class="">
+                                <v-chip :text="item.fromPhone == true ? 'تلفنی' : 'آنلاین'" color="#78909C"
+                                    size="small"></v-chip>
+                            </div>
                         </template>
                     </v-data-table>
                 </v-tabs-window-item>
@@ -287,6 +299,10 @@ const Transactionheaders = ref([
         key: 'date',
     },
     {
+        title: 'روش ثبت',
+        key: 'fromPhone',
+    },
+    {
         title: 'زمان',
         key: 'time',
     },
@@ -309,6 +325,10 @@ const Transactionheaders = ref([
 ]);
 const filter = ref([
     {
+        text: 'همه',
+        value: '',
+    },
+    {
         text: 'موفق',
         value: 'success',
     },
@@ -319,10 +339,6 @@ const filter = ref([
     {
         text: 'نامشخص',
         value: 'pending',
-    },
-    {
-        text: 'همه',
-        value: '',
     },
 ])
 let interval = ref(null);
@@ -403,7 +419,7 @@ const GetGoldPrice = async () => {
 
 const buyGoldpriceConvert = () => {
     buyInfo.value.goldprice = buyInfo.value.goldprice.replace(/[^0-9]/g, '');
-    buyInfo.value.goldWeight = (buyInfo.value.goldprice / goldPriceLive.value.buyPrice).toFixed(2);
+    buyInfo.value.goldWeight = (buyInfo.value.goldprice / goldPriceLive.value.buyPrice).toFixed(3);
 }
 
 
@@ -416,7 +432,7 @@ const buyGoldweightConvert = () => {
     }
 
     if (parts.length > 1 && parts[1].length > 2) {
-        buyInfo.value.goldWeight = parts[0] + '.' + parts[1].slice(0, 2);
+        buyInfo.value.goldWeight = parts[0] + '.' + parts[1].slice(0, 3);
     }
 
 
@@ -425,7 +441,7 @@ const buyGoldweightConvert = () => {
 
 const sellGoldpriceConvert = () => {
     sellInfo.value.goldPrice = sellInfo.value.goldPrice.replace(/[^0-9]/g, '');
-    sellInfo.value.goldWeight = (sellInfo.value.goldPrice / goldPriceLive.value.sellPrice).toFixed(2)
+    sellInfo.value.goldWeight = (sellInfo.value.goldPrice / goldPriceLive.value.sellPrice).toFixed(3)
 }
 
 const sellGoldweightConvert = () => {
@@ -437,7 +453,7 @@ const sellGoldweightConvert = () => {
     }
 
     if (parts.length > 1 && parts[1].length > 2) {
-        sellInfo.value.goldWeight = parts[0] + '.' + parts[1].slice(0, 2);
+        sellInfo.value.goldWeight = parts[0] + '.' + parts[1].slice(0, 3);
     }
 
     sellInfo.value.goldPrice = parseInt(sellInfo.value.goldWeight * goldPriceLive.value.sellPrice)
@@ -446,7 +462,7 @@ const sellGoldweightConvert = () => {
 
 const validateWeight = [
     (v) => !!v || 'مقدار ورودی نمی‌تواند خالی باشد', // بررسی خالی نبودن فیلد
-    (v) => /^\d+(\.\d{1,2})?$/.test(v) || 'فقط عدد مجاز است و حداکثر ۲ رقم اعشار', // بررسی
+    (v) => /^\d+(\.\d{1,3})?$/.test(v) || 'فقط عدد مجاز است و حداکثر 3 رقم اعشار', // بررسی
 ];
 
 

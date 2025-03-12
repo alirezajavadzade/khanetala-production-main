@@ -57,7 +57,7 @@
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">کیف پول</p>
           <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
-          <p class="number" v-else>{{ wallet.walletPrice }}</p>
+          <p class="number" v-else>{{ formatNumber(wallet.walletPrice) }}</p>
         </div>
       </div>
     </v-col>
@@ -81,7 +81,7 @@
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">دارایی کل</p>
           <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
-          <p class="number" v-else>0 ریال</p>
+          <p class="number" v-else>{{ formatNumber(wallet.totalBalance) }} ریال</p>
         </div>
       </div>
     </v-col>
@@ -140,6 +140,7 @@ const wallet = ref({
   walletPrice: 0,
   walletWeight: 0,
   monthlyProfit: 0,
+  totalBalance: 0,
 });
 
 let delayed;
@@ -310,10 +311,10 @@ const GetChartData = async () => {
   try {
     ChartLoading.value = true;
     const response = await DashboardService.DahboardChart();
-    wallet.value.walletPrice = response.topBoxes.balance;
-    wallet.value.walletWeight = response.topBoxes.goldWeight;
-    wallet.value.monthlyProfit = response.topBoxes.monthlyProfit;
-
+    wallet.value.walletPrice = response.topBoxes?.balance;
+    wallet.value.walletWeight = response.topBoxes?.goldWeight;
+    wallet.value.monthlyProfit = response.topBoxes?.monthlyProfit;
+    wallet.value.totalBalance = response.topBoxes?.totalBalance;
 
     BuyInMonthChartData.value = {
       labels: [...response.buyInMonth.label],
@@ -333,7 +334,6 @@ const GetChartData = async () => {
       ]
     };
 
-
     AssetsChartData.value = {
       labels: [...response.assets.label],
       datasets: [
@@ -342,11 +342,6 @@ const GetChartData = async () => {
         }
       ]
     };
-
-
-
-
-
 
     return response
   } catch (error) {

@@ -112,7 +112,7 @@
                                 <template v-slot:item.status="{ item }">
                                     <div class="">
                                         <v-chip
-                                            :text="item.status == 'completed' ? 'موفق' : (item.status) == 'pending' ? 'نامشخص' : 'ناموفق'"
+                                            :text="item.status == 'completed' ? 'موفق' : (item.status) == 'pending' ? 'در انتظار' : 'ناموفق'"
                                             :color="item.status == 'completed' ? 'green' : (item.status) == 'pending' ? '#666666' : 'red'"
                                             size="small"></v-chip>
                                     </div>
@@ -222,6 +222,10 @@ const depositLoading = ref(false);
 const successMsg = ref('')
 const filter = ref([
     {
+        text: 'همه',
+        value: '',
+    },
+    {
         text: 'موفق',
         value: 'completed',
     },
@@ -232,10 +236,6 @@ const filter = ref([
     {
         text: 'نامشخص',
         value: 'pending',
-    },
-    {
-        text: 'همه',
-        value: '',
     },
 ])
 const Transactionheaders = ref([
@@ -257,11 +257,11 @@ const Transactionheaders = ref([
     },
 ]);
 const wallet = ref({
-    balance: '-',
-    goldWeight: '-',
-    goldprice: '-',
-    TotalAssets: '-',
-    blocked:'-'
+    balance: 0,
+    goldWeight: 0,
+    goldprice: 0,
+    TotalAssets: 0,
+    blocked: 0
 })
 
 const formatNumber = (num) => {
