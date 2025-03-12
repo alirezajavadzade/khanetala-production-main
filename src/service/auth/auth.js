@@ -1,4 +1,5 @@
 import VerifyTemplate from "./api";
+import AuthTemplate from "./authApi";
 
 
 const AuthService = {
@@ -8,7 +9,7 @@ const AuthService = {
         });
         localStorage.setItem("phoneNumber", JSON.stringify(phoneNumber))
         localStorage.setItem('loginTime', JSON.stringify(Date.now()));
-        const response = await VerifyTemplate.post("/otp", body);
+        const response = await AuthTemplate.post("/otp", body);
         return response.data
     },
 
@@ -17,7 +18,7 @@ const AuthService = {
             "otp": otp,
             "phoneNumber": JSON.parse(localStorage.getItem("phoneNumber"))
         });
-        const response = await VerifyTemplate.post("/verifyOtp", body);
+        const response = await AuthTemplate.post("/verifyOtp", body);
         const token = response.data.token;
         localStorage.setItem("token", token)
         return response.data
@@ -25,7 +26,7 @@ const AuthService = {
 
     async VerifyIdentity(identity) {
         const body = JSON.stringify(identity);
-        const response = await VerifyTemplate.post("/identify", body);
+        const response = await AuthTemplate.post("/identify", body);
         console.log('api call')
         if (response.data.token) {
             const token = response.data.token;

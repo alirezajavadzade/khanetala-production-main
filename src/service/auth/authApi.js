@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const VerifyTemplate = axios.create({
+const AuthTemplate = axios.create({
     baseURL: "https://khaneetala.ir/api",
     headers: {
         "Content-Type": "application/json",
@@ -14,13 +14,11 @@ const VerifyTemplate = axios.create({
 
 
 // before request
-VerifyTemplate.interceptors.request.use(
+AuthTemplate.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("token");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
-        } else {
-            router.replace('/login');;
         }
         return config;
     },
@@ -31,18 +29,18 @@ VerifyTemplate.interceptors.request.use(
 
 
 // before response
-VerifyTemplate.interceptors.response.use(
+AuthTemplate.interceptors.response.use(
     (response) => {
         return response;
     },
     (error) => {
         if (error.response.status == 401) {
             localStorage.removeItem("token");
-            router.replace('/login');;
+            router.replace('/login');
         }
         console.error("API Error:", error.response || error.message);
         return Promise.reject(error);
     }
 );
 
-export default VerifyTemplate;
+export default AuthTemplate;

@@ -56,8 +56,8 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">کیف پول</p>
-          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
-          <p class="number" v-else>120,000,000</p>
+          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
+          <p class="number" v-else>{{ wallet.walletPrice }}</p>
         </div>
       </div>
     </v-col>
@@ -68,7 +68,7 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">دارایی طلا</p>
-          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
+          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
           <p class="number" v-else>{{ wallet.walletWeight }} گرم</p>
         </div>
       </div>
@@ -80,7 +80,7 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">دارایی کل</p>
-          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
+          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
           <p class="number" v-else>0 ریال</p>
         </div>
       </div>
@@ -92,8 +92,8 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">سود ماهانه</p>
-          <v-progress-circular color="white" indeterminate v-if="walletLoading"></v-progress-circular>
-          <p class="number" v-else>23.6 ٪</p>
+          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
+          <p class="number" v-else>{{ wallet.monthlyProfit }} ٪</p>
         </div>
       </div>
     </v-col>
@@ -101,19 +101,19 @@
     <v-col cols="12" md="6" class="my-1">
       <div class="chart-card">
         <h3>خرید در ماه</h3>
-        <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+        <Bar :options="BuyInMonthChartOption" :data="BuyInMonthChartData" />
       </div>
     </v-col>
     <v-col cols="12" md="6" class="my-1">
       <div class="chart-card">
         <h3>قیمت لحظه ای طلا</h3>
-        <Line :options="chartOptions2" :data="chartData2" />
+        <Line :options="MonthlyPriceChartOption" :data="MonthlyPriceChartData" />
       </div>
     </v-col>
     <v-col cols="12" md="3" class="my-1">
       <div class="chart-card">
         <h3>میزان دارایی شما</h3>
-        <Doughnut :options="chartOptions3" :data="chartData3" />
+        <Doughnut :options="AssetsChartOption" :data="AssetsChartData" />
       </div>
     </v-col>
   </v-row>
@@ -128,23 +128,28 @@ import DiagramUpIcon from '@/assets/images/icons/DiagramUp.vue'
 import WalletMoneyIcon from '@/assets/images/icons/WalletMoney.vue'
 import { Bar, Line, Doughnut } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement } from 'chart.js'
+import DashboardService from '@/service/auth/dashboard';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement)
 
 
 const errorMsg = ref('');
+const ChartLoading = ref('');
 const alertError = ref(false);
 const wallet = ref({
   walletPrice: 0,
   walletWeight: 0,
-  walletId: '',
+  monthlyProfit: 0,
 });
-const chartData = ref({
-  labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-  datasets: [{ data: [40, 20, 12, 50, 96, 12, 8, 70, 59, 63, 48, 50], backgroundColor: '#00603A', }],
-})
+
+const walletLoading = ref(false);
 let delayed;
-const chartOptions = ref({
+
+const BuyInMonthChartData = ref({
+  labels: [],
+  datasets: [{ data: [], backgroundColor: '#00603A', }],
+});
+const BuyInMonthChartOption = ref({
   responsive: true,
   animation: {
     onComplete: () => {
@@ -161,14 +166,35 @@ const chartOptions = ref({
   scales: {
     x: {
       stacked: true,
+      ticks: {
+        font: {
+          family: 'Modam',
+          size: 14,
+        },
+      },
     },
     y: {
-      stacked: true
+      stacked: true,
+      ticks: {
+        font: {
+          family: 'Modam',
+          size: 14,
+        },
+      },
     }
-  }
+  },
+  plugins: {
+    legend: {
+      labels: {
+        font: {
+          family: 'Modam',
+        },
+      },
+    },
+  },
 })
 
-const chartData2 = ref({
+const MonthlyPriceChartData = ref({
   labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
   datasets: [
     {
@@ -178,7 +204,7 @@ const chartData2 = ref({
     }
   ]
 })
-const chartOptions2 = ref({
+const MonthlyPriceChartOption = ref({
   responsive: true,
   animation: {
     onComplete: () => {
@@ -195,17 +221,38 @@ const chartOptions2 = ref({
   scales: {
     x: {
       stacked: true,
+      ticks: {
+        font: {
+          family: 'Modam',
+          size: 14,
+        },
+      },
     },
     y: {
-      stacked: true
+      stacked: true,
+      ticks: {
+        font: {
+          family: 'Modam',
+          size: 14,
+        },
+      },
     }
-  }
+  },
+  plugins: {
+    legend: {
+      labels: {
+        font: {
+          family: 'Modam',
+        },
+      },
+    },
+  },
 })
 
 
 
 
-const chartData3 = ref({
+const AssetsChartData = ref({
   labels: ['دارایی طلایی', 'دارایی ریالی',],
   datasets: [
     {
@@ -214,7 +261,7 @@ const chartData3 = ref({
     }
   ]
 })
-const chartOptions3 = ref({
+const AssetsChartOption = ref({
   responsive: true,
   animation: {
     onComplete: () => {
@@ -231,24 +278,77 @@ const chartOptions3 = ref({
   scales: {
     x: {
       stacked: true,
+      ticks: {
+        font: {
+          family: 'Modam',
+          size: 14,
+        },
+      },
     },
     y: {
-      stacked: true
+      stacked: true,
+      ticks: {
+        font: {
+          family: 'Modam',
+          size: 14,
+        },
+      },
     }
-  }
+  },
+  plugins: {
+    legend: {
+      labels: {
+        font: {
+          family: 'Modam',
+        },
+      },
+    },
+  },
 })
 
 
-
-const walletLoading = ref(false);
-
-const GetWallet = async () => {
+const GetChartData = async () => {
   try {
-    walletLoading.value = true;
-    const response = await AuthService.Wallet();
-    wallet.value.walletPrice = response.balance;
-    wallet.value.walletWeight = response.goldWeight;
-    wallet.value.walletId = response.id;
+    ChartLoading.value = true;
+    const response = await DashboardService.DahboardChart();
+    wallet.value.walletPrice = response.topBoxes.balance;
+    wallet.value.walletWeight = response.topBoxes.goldWeight;
+    wallet.value.monthlyProfit = response.topBoxes.monthlyProfit;
+
+
+    BuyInMonthChartData.value = {
+      labels: [...response.buyInMonth.label],
+      datasets: [
+        {
+          data: [...response.buyInMonth.data],
+        }
+      ]
+    };
+
+    MonthlyPriceChartData.value = {
+      labels: [...response.monthlyPrice.label],
+      datasets: [
+        {
+          data: [...response.monthlyPrice.data],
+        }
+      ]
+    };
+
+
+    AssetsChartData.value = {
+      labels: [...response.assets.label],
+      datasets: [
+        {
+          data: [...response.assets.data],
+        }
+      ]
+    };
+
+
+
+
+
+
     return response
   } catch (error) {
     errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
@@ -257,7 +357,7 @@ const GetWallet = async () => {
       alertError.value = false;
     }, 10000)
   } finally {
-    walletLoading.value = false;
+    ChartLoading.value = false;
   }
 }
 
@@ -268,7 +368,7 @@ const formatNumber = (num) => {
 
 
 onMounted(() => {
-  GetWallet();
+  GetChartData();
 })
 
 
