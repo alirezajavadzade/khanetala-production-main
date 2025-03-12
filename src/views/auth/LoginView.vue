@@ -83,7 +83,7 @@ const submitPhone = async () => {
         loading.value = true;
         const response = await AuthService.Login(mobileNumber.value);
         router.replace('/OTP');
-        // return response
+        return response
     } catch (error) {
         errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
         alertError.value = true;
