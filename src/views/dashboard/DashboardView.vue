@@ -48,7 +48,6 @@
       </div>
     </v-col> -->
 
-
     <v-col cols="6" md="3" class="my-1">
       <div class="k-card">
         <div class="icon-box">
@@ -56,7 +55,11 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">کیف پول</p>
-          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
+          <v-progress-circular
+            color="white"
+            indeterminate
+            v-if="ChartLoading"
+          ></v-progress-circular>
           <p class="number" v-else>{{ formatNumber(wallet.walletPrice) }}</p>
         </div>
       </div>
@@ -68,7 +71,11 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">دارایی طلا</p>
-          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
+          <v-progress-circular
+            color="white"
+            indeterminate
+            v-if="ChartLoading"
+          ></v-progress-circular>
           <p class="number" v-else>{{ wallet.walletWeight }} گرم</p>
         </div>
       </div>
@@ -80,8 +87,14 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">دارایی کل</p>
-          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
-          <p class="number" v-else>{{ formatNumber(wallet.totalBalance) }} ریال</p>
+          <v-progress-circular
+            color="white"
+            indeterminate
+            v-if="ChartLoading"
+          ></v-progress-circular>
+          <p class="number" v-else>
+            {{ formatNumber(wallet.totalBalance) }} ریال
+          </p>
         </div>
       </div>
     </v-col>
@@ -92,7 +105,11 @@
         </div>
         <div class="d-flex flex-column align-center">
           <p class="title mx-3">سود ماهانه</p>
-          <v-progress-circular color="white" indeterminate v-if="ChartLoading"></v-progress-circular>
+          <v-progress-circular
+            color="white"
+            indeterminate
+            v-if="ChartLoading"
+          ></v-progress-circular>
           <p class="number" v-else>{{ wallet.monthlyProfit }} ٪</p>
         </div>
       </div>
@@ -107,7 +124,10 @@
     <v-col cols="12" md="6" class="my-1">
       <div class="chart-card">
         <h3>قیمت لحظه ای طلا</h3>
-        <Line :options="MonthlyPriceChartOption" :data="MonthlyPriceChartData" />
+        <Line
+          :options="MonthlyPriceChartOption"
+          :data="MonthlyPriceChartData"
+        />
       </div>
     </v-col>
     <v-col cols="12" md="3" class="my-1">
@@ -120,20 +140,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import chartIcon from '@/assets/images/icons/Chart.vue'
-import dollarIcon from '@/assets/images/icons/Dollar.vue'
-import DiagramUpIcon from '@/assets/images/icons/DiagramUp.vue'
-import WalletMoneyIcon from '@/assets/images/icons/WalletMoney.vue'
-import { Bar, Line, Doughnut } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement } from 'chart.js'
-import DashboardService from '@/service/auth/dashboard';
+import { ref, onMounted } from "vue";
+import chartIcon from "@/assets/images/icons/Chart.vue";
+import dollarIcon from "@/assets/images/icons/Dollar.vue";
+import DiagramUpIcon from "@/assets/images/icons/DiagramUp.vue";
+import WalletMoneyIcon from "@/assets/images/icons/WalletMoney.vue";
+import { Bar, Line, Doughnut } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  ArcElement,
+  PointElement,
+  LineElement,
+} from "chart.js";
+import DashboardService from "@/service/auth/dashboard";
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement)
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  ArcElement,
+  PointElement,
+  LineElement
+);
 
-
-const errorMsg = ref('');
-const ChartLoading = ref('');
+const errorMsg = ref("");
+const ChartLoading = ref("");
 const alertError = ref(false);
 const wallet = ref({
   walletPrice: 0,
@@ -146,7 +186,7 @@ let delayed;
 
 const BuyInMonthChartData = ref({
   labels: [],
-  datasets: [{ data: [], backgroundColor: '#00603A' }],
+  datasets: [{ data: [], backgroundColor: "#00603A" }],
 });
 const BuyInMonthChartOption = ref({
   responsive: true,
@@ -156,7 +196,7 @@ const BuyInMonthChartOption = ref({
     },
     delay: (context) => {
       let delay = 0;
-      if (context.type === 'data' && context.mode === 'default' && !delayed) {
+      if (context.type === "data" && context.mode === "default" && !delayed) {
         delay = context.dataIndex * 300 + context.datasetIndex * 100;
       }
       return delay;
@@ -167,7 +207,7 @@ const BuyInMonthChartOption = ref({
       stacked: true,
       ticks: {
         font: {
-          family: 'Modam',
+          family: "Modam",
           size: 14,
         },
       },
@@ -176,32 +216,32 @@ const BuyInMonthChartOption = ref({
       stacked: true,
       ticks: {
         font: {
-          family: 'Modam',
+          family: "Modam",
           size: 14,
         },
       },
-    }
+    },
   },
   plugins: {
     legend: {
       labels: {
         font: {
-          family: 'Modam',
+          family: "Modam",
         },
       },
     },
   },
-})
+});
 
 const MonthlyPriceChartData = ref({
   labels: [],
   datasets: [
     {
-      backgroundColor: '#00603A',
+      backgroundColor: "#00603A",
       data: [],
-    }
-  ]
-})
+    },
+  ],
+});
 const MonthlyPriceChartOption = ref({
   responsive: true,
   animation: {
@@ -210,7 +250,7 @@ const MonthlyPriceChartOption = ref({
     },
     delay: (context) => {
       let delay = 0;
-      if (context.type === 'data' && context.mode === 'default' && !delayed) {
+      if (context.type === "data" && context.mode === "default" && !delayed) {
         delay = context.dataIndex * 300 + context.datasetIndex * 100;
       }
       return delay;
@@ -221,7 +261,7 @@ const MonthlyPriceChartOption = ref({
       stacked: true,
       ticks: {
         font: {
-          family: 'Modam',
+          family: "Modam",
           size: 14,
         },
       },
@@ -230,35 +270,32 @@ const MonthlyPriceChartOption = ref({
       stacked: true,
       ticks: {
         font: {
-          family: 'Modam',
+          family: "Modam",
           size: 14,
         },
       },
-    }
+    },
   },
   plugins: {
     legend: {
       labels: {
         font: {
-          family: 'Modam',
+          family: "Modam",
         },
       },
     },
   },
-})
-
-
-
+});
 
 const AssetsChartData = ref({
   labels: [],
   datasets: [
     {
-      backgroundColor: ['#00603A', '#008651'],
-      data: []
-    }
-  ]
-})
+      backgroundColor: ["#00603A", "#008651"],
+      data: [],
+    },
+  ],
+});
 const AssetsChartOption = ref({
   responsive: true,
   animation: {
@@ -267,7 +304,7 @@ const AssetsChartOption = ref({
     },
     delay: (context) => {
       let delay = 0;
-      if (context.type === 'data' && context.mode === 'default' && !delayed) {
+      if (context.type === "data" && context.mode === "default" && !delayed) {
         delay = context.dataIndex * 300 + context.datasetIndex * 100;
       }
       return delay;
@@ -278,7 +315,7 @@ const AssetsChartOption = ref({
       stacked: true,
       ticks: {
         font: {
-          family: 'Modam',
+          family: "Modam",
           size: 14,
         },
       },
@@ -287,23 +324,22 @@ const AssetsChartOption = ref({
       stacked: true,
       ticks: {
         font: {
-          family: 'Modam',
+          family: "Modam",
           size: 14,
         },
       },
-    }
+    },
   },
   plugins: {
     legend: {
       labels: {
         font: {
-          family: 'Modam',
+          family: "Modam",
         },
       },
     },
   },
-})
-
+});
 
 const GetChartData = async () => {
   try {
@@ -319,8 +355,10 @@ const GetChartData = async () => {
       datasets: [
         {
           data: [...response.buyInMonth.data],
-        }
-      ]
+          label:'خرید ماهانه',
+          backgroundColor: "#00603A"
+        },
+      ],
     };
 
     MonthlyPriceChartData.value = {
@@ -328,8 +366,10 @@ const GetChartData = async () => {
       datasets: [
         {
           data: [...response.monthlyPrice.data],
-        }
-      ]
+          label:'قیمت ماهانه',
+          backgroundColor: "#00603A"
+        },
+      ],
     };
 
     AssetsChartData.value = {
@@ -337,33 +377,29 @@ const GetChartData = async () => {
       datasets: [
         {
           data: [...response.assets.data],
-        }
-      ]
+        },
+      ],
     };
 
-    return response
+    return response;
   } catch (error) {
-    errorMsg.value = error.response.data.msg || 'خطایی رخ داده است!';
+    errorMsg.value = error.response.data.msg || "خطایی رخ داده است!";
     alertError.value = true;
     setTimeout(() => {
       alertError.value = false;
-    }, 10000)
+    }, 10000);
   } finally {
     ChartLoading.value = false;
   }
-}
-
-
-const formatNumber = (num) => {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+const formatNumber = (num) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 onMounted(() => {
   GetChartData();
-})
-
-
+});
 </script>
 
 <style scoped>
@@ -389,7 +425,7 @@ onMounted(() => {
 }
 
 .d-card .icon-box {
-  background-color: #F4E9D4;
+  background-color: #f4e9d4;
   padding: 3px;
   border-radius: 10px;
   display: flex;
@@ -428,7 +464,6 @@ onMounted(() => {
   background-color: #e3e3e3;
   color: rgba(56, 120, 93, 1);
 }
-
 
 .k-btn-second {
   padding: 0.5rem 1rem !important;
@@ -515,7 +550,7 @@ onMounted(() => {
 }
 
 .k-card .title {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 300;
   margin-top: 0.4rem;
 }

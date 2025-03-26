@@ -1,14 +1,11 @@
 <template>
   <v-container class="container py-5" :fluid="false">
-    <div class="d-flex justify-space-between d-md-none">
+    <div class="d-flex justify-end d-md-none">
       <v-app-bar-nav-icon
+        class="d-none"
         variant="text"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <!-- <div class="d-flex justify-center align-center">
-        <span class="profile-text">{{ user.firstName }} عزیز</span>
-        <User class="profile-icon" />
-      </div> -->
       <v-btn
         id="menu-activator-mobile"
         density="compact"
@@ -53,10 +50,6 @@
             <EditInfo class="dashboard-icon" />
             <span>اطلاعات شخصی</span>
           </RouterLink>
-          <!-- <v-btn variant="text" class="logout-btn" @click="logout">
-            <logOut />
-            خروج از حساب
-          </v-btn> -->
         </div>
       </v-navigation-drawer>
     </v-layout>
@@ -83,10 +76,6 @@
               <EditInfo class="dashboard-icon" />
               <span>اطلاعات شخصی</span>
             </RouterLink>
-            <!-- <v-btn variant="text" class="logout-btn" @click="logout">
-              <logOut />
-              خروج از حساب
-            </v-btn> -->
           </div>
         </div>
       </v-col>
@@ -154,9 +143,8 @@
       {{ successMsg }}
     </v-alert>
   </v-container>
-
   <v-dialog v-model="cartDialog" width="auto">
-    <v-card min-width="350" max-width="400" class="cart-Dialog">
+    <v-card class="cart-Dialog">
       <div class="title my-3">
         <InfoIcon />
         <p>مالکیت کارت باید به نام خودتان باشد</p>
@@ -185,6 +173,24 @@
       </v-form>
     </v-card>
   </v-dialog>
+  <div class="bottom-nav d-md-none">
+    <RouterLink class="bottom-nav-box" to="/">
+      <DashboardIcon class="dashboard-icon" />
+      <span>پیشخوان</span>
+    </RouterLink>
+    <RouterLink class="bottom-nav-box" to="Goldbox">
+      <GoldboxIcon class="dashboard-icon" />
+      <span>صندوق طلا</span>
+    </RouterLink>
+    <RouterLink class="bottom-nav-box" to="Bankinfo">
+      <CardsIcon class="dashboard-icon" />
+      <span>کیف پول</span>
+    </RouterLink>
+    <RouterLink class="bottom-nav-box" to="PersonalInfo">
+      <EditInfo class="dashboard-icon" />
+      <span>اطلاعات شخصی</span>
+    </RouterLink>
+  </div>
 </template>
 
 <script setup>
@@ -415,5 +421,44 @@ onMounted(() => {
   right: 10px;
   font-size: 12px;
   padding: 2px !important;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 97%;
+  margin: 0.3rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 96, 58, 0.21);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.6px);
+  -webkit-backdrop-filter: blur(10.6px);
+  border: 1px solid rgba(0, 96, 58, 0.2);
+}
+
+.bottom-nav-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.bottom-nav-box span {
+  color: #00603a;
+  font-size: 13px;
+}
+
+.bottom-nav-box svg {
+  filter: brightness(0) saturate(100%) invert(24%) sepia(22%) saturate(3635%)
+    hue-rotate(125deg) brightness(99%) contrast(100%);
+}
+
+#menu-activator-desc {
+  margin-right: auto;
 }
 </style>

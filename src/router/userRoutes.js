@@ -29,4 +29,10 @@ export default [
         component: () => import('../views/dashboard/TransactionView.vue'),
         meta: { layout: "DashboardLayout", transition: 'fade', requiresAuth: true },
     },
+    {
+        path: '/GoldBoxNewView',
+        name: 'GoldBoxNewView',
+        component: () => import('../views/dashboard/GoldBoxNewView.vue'),
+        meta: { layout: "DashboardLayout", transition: 'fade', requiresAuth: true },
+    },
 ]
