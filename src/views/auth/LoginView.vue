@@ -6,7 +6,7 @@
         </v-alert>
 
         <div class="k-stepper">
-            <div class="step active">
+            <!-- <div class="step active">
                 <div>
                     <span class="circle">
                     </span>
@@ -36,7 +36,7 @@
                     </span>
                 </div>
                 <p class="mb-0">احراز هویت</p>
-            </div>
+            </div> -->
         </div>
         <img src="/src/assets/logo.svg" alt="خانه طلا" class="my-5">
         <h3>ورود به حساب کاربری</h3>
@@ -185,5 +185,9 @@ const submitPhone = async () => {
     width: 100%;
     font-size: 12px;
     padding: 2px !important;
+}
+
+.k-stepper{
+    min-height: 55px;
 }
 </style>

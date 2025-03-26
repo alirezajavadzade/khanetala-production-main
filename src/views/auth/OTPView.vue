@@ -5,7 +5,7 @@
             {{ errorMsg }}
         </v-alert>
         <div class="k-stepper">
-            <div class="step verified">
+            <!-- <div class="step verified">
                 <div>
                     <span class="circle">
                         <span class="mdi mdi-check"></span>
@@ -36,7 +36,7 @@
                     </span>
                 </div>
                 <p class="mb-0">احراز هویت</p>
-            </div>
+            </div> -->
         </div>
         <img src="/src/assets/logo.svg" alt="خانه طلا" class="my-5">
         <h3>تایید شماره همراه</h3>
@@ -243,5 +243,9 @@ onUnmounted(() => {
     color: #274BFF;
     text-decoration: underline;
     letter-spacing: 0 !important;
+}
+
+.k-stepper{
+    min-height: 55px;
 }
 </style>

@@ -165,7 +165,6 @@
         </v-dialog>
 
 
-
         <v-dialog v-model="withdrawDialog" width="auto">
             <v-card min-width="350" max-width="400" class="cart-Dialog">
                 <div class="title my-1">
@@ -184,7 +183,6 @@
             </v-card>
         </v-dialog>
 
-
     </div>
 </template>
 
@@ -199,9 +197,7 @@ import { numberToWords } from '@persian-tools/persian-tools';
 import InfoIcon from '@/assets/images/icons/InfoIcon.vue';
 
 
-
 const route = useRoute();
-
 
 const errorMsg = ref('');
 const alertError = ref(false);
@@ -237,7 +233,7 @@ const filter = ref([
         text: 'نامشخص',
         value: 'pending',
     },
-])
+]);
 const Transactionheaders = ref([
     {
         title: 'تاریخ',
@@ -262,7 +258,7 @@ const wallet = ref({
     goldprice: 0,
     TotalAssets: 0,
     blocked: 0
-})
+});
 
 const formatNumber = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -272,7 +268,7 @@ const goldPriceLive = ref({
     sellPrice: '',
     buyPrice: '',
     change: '',
-})
+});
 
 const filterTransaction = ref({
     type: '',
@@ -302,7 +298,7 @@ const GetWallet = async () => {
     } finally {
         walletLoading.value = false;
     }
-}
+};
 
 const GetGoldPrice = async () => {
     try {
@@ -321,7 +317,7 @@ const GetGoldPrice = async () => {
     } finally {
         GoldPriceLoading.value = false;
     }
-}
+};
 
 
 const deposit = async () => {
@@ -339,7 +335,7 @@ const deposit = async () => {
     } finally {
 
     }
-}
+};
 
 
 const VerifyDeposit = async (zarinpal) => {
@@ -357,7 +353,7 @@ const VerifyDeposit = async (zarinpal) => {
     } finally {
 
     }
-}
+};
 
 
 const withdraw = async () => {
@@ -382,7 +378,7 @@ const withdraw = async () => {
     } finally {
         withdrawLoading.value = false;
     }
-}
+};
 
 
 const validatePrice = [
@@ -403,7 +399,7 @@ const limitInput = () => {
         priceAmount.value = priceAmount.value.slice(0, 11);
     }
     priceAmount.value = formatNumberWithCommas(priceAmount.value);
-}
+};
 
 const limitWithdrawInput = () => {
     withdrawAmount.value = withdrawAmount.value.replace(/\D/g, '');
@@ -435,7 +431,7 @@ const depositTransaction = async () => {
     } finally {
         TransactionLoading.value = false;
     }
-}
+};
 
 const withdrawTransaction = async () => {
     try {
@@ -454,13 +450,13 @@ const withdrawTransaction = async () => {
     } finally {
         TransactionLoading.value = false;
     }
-}
+};
 
 const filterChange = (filterValue) => {
     filterTransaction.value.status = filterValue.value;
     depositTransaction();
     withdrawTransaction();
-}
+};
 
 const amountInWords = computed(() => {
     if (withdrawAmount.value) {
@@ -527,7 +523,7 @@ onMounted(() => {
             router.push({ name: 'failed', query: verifyDetail.value });
         }
     }
-})
+});
 </script>
 
 <style scoped>

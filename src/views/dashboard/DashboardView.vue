@@ -121,7 +121,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import AuthService from '@/service/auth/auth';
 import chartIcon from '@/assets/images/icons/Chart.vue'
 import dollarIcon from '@/assets/images/icons/Dollar.vue'
 import DiagramUpIcon from '@/assets/images/icons/DiagramUp.vue'
@@ -147,7 +146,7 @@ let delayed;
 
 const BuyInMonthChartData = ref({
   labels: [],
-  datasets: [{ data: [], backgroundColor: '#00603A', }],
+  datasets: [{ data: [], backgroundColor: '#00603A' }],
 });
 const BuyInMonthChartOption = ref({
   responsive: true,
@@ -198,7 +197,6 @@ const MonthlyPriceChartData = ref({
   labels: [],
   datasets: [
     {
-      label: 'Data One',
       backgroundColor: '#00603A',
       data: [],
     }
