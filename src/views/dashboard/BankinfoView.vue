@@ -389,7 +389,7 @@ const validatePrice = [
 
 const isValidcharge = computed(() => {
     const amount = parseFloat(priceAmount.value.replace(/,/g, ''));
-    return amount >= 1000000;
+    return amount >= 100000;
 });
 
 

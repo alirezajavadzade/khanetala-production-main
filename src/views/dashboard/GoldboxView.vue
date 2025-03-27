@@ -751,6 +751,8 @@ const CreateSell = async () => {
     paymentSellInfo.value.invoiceId = response.transactionId;
     paymentSellInfo.value.balance = response.wallet.balance;
     paymentSellInfo.value.goldWeight = response.wallet.goldWeight;
+    sellInfo.value.goldPrice = "";
+    sellInfo.value.goldPrice = "";
     sellModal.value = true;
     return response;
   } catch (error) {
