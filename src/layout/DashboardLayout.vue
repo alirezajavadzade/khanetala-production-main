@@ -94,6 +94,16 @@
               >ثبت کارت</v-btn
             >
           </div>
+          <div class="d-flex justify-space-between justify-md-start w-100" v-else>
+            <div class="assets-gold">
+              <p class="ma-0">موجودی طلایی: {{ user.wallet.goldWeight }} گرم</p>
+            </div>
+            <div class="assets-price">
+              <p class="ma-0">
+                موجودی کیف پول: {{ user.wallet.balance }} تومان
+              </p>
+            </div>
+          </div>
           <v-btn
             id="menu-activator-desc"
             density="compact"
@@ -461,5 +471,33 @@ onMounted(() => {
 
 #menu-activator-desc {
   margin-right: auto;
+}
+
+.assets-price {
+  font-size: 11px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+  background-color: #00603a;
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+.assets-gold {
+  font-size: 11px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+  background-color: #ceffeb;
+  color: #00603a;
+  margin: 0 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .assets-price {
+    font-size: 14px;
+  }
+
+  .assets-gold {
+    font-size: 14px;
+  }
 }
 </style>
