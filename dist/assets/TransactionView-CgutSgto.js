@@ -1,1 +1,0 @@
-import{_ as t,c as n,a as o,o as r}from"./index-Q-0MQW2x.js";const s={};function a(c,e){return r(),n("div",null,e[0]||(e[0]=[o("h1",null,"test",-1)]))}const _=t(s,[["render",a]]);export{_ as default};
