@@ -255,10 +255,18 @@
               <template v-slot:item.totalPrice="{ item }">
                 <p>{{ formatNumber(item.totalPrice) }}</p>
               </template>
-              <template v-slot:item.fromPhone="{ item }">
+              <template v-slot:item.tradeType="{ item }">
                 <div class="">
                   <v-chip
-                    :text="item.fromPhone == true ? 'تلفنی' : 'آنلاین'"
+                    :text="
+                      item.tradeType == 0
+                        ? 'آنلاین'
+                        : item.tradeType == 1
+                        ? 'تلفنی'
+                        : item.tradeType == 2
+                        ? 'حضوری'
+                        : 'حواله'
+                    "
                     color="#78909C"
                     size="small"
                   ></v-chip>
@@ -301,10 +309,18 @@
               <template v-slot:item.totalPrice="{ item }">
                 <p>{{ formatNumber(item.totalPrice) }}</p>
               </template>
-              <template v-slot:item.fromPhone="{ item }">
+              <template v-slot:item.tradeType="{ item }">
                 <div class="">
                   <v-chip
-                    :text="item.fromPhone == true ? 'تلفنی' : 'آنلاین'"
+                    :text="
+                      item.tradeType == 0
+                        ? 'آنلاین'
+                        : item.tradeType == 1
+                        ? 'تلفنی'
+                        : item.tradeType == 2
+                        ? 'حضوری'
+                        : 'حواله'
+                    "
                     color="#78909C"
                     size="small"
                   ></v-chip>
@@ -465,7 +481,7 @@ const Transactionheaders = ref([
   },
   {
     title: "روش ثبت",
-    key: "fromPhone",
+    key: "tradeType",
   },
   {
     title: "زمان",
@@ -564,7 +580,9 @@ const formatNumber = (num) => {
 
 const BuyAmountInWords = computed(() => {
   if (buyInfo.value.goldprice && buyInfo.value.goldprice != "") {
-    const amountWithoutCommas = buyInfo.value.goldprice.toString().replace(/,/g, "");
+    const amountWithoutCommas = buyInfo.value.goldprice
+      .toString()
+      .replace(/,/g, "");
     const amountInRial = parseInt(amountWithoutCommas, 10);
 
     if (amountInRial < 1) {
@@ -578,7 +596,9 @@ const BuyAmountInWords = computed(() => {
 
 const SellAmountInWords = computed(() => {
   if (sellInfo.value.goldPrice && sellInfo.value.goldPrice != "") {
-    const amountWithoutCommas = sellInfo.value.goldPrice.toString().replace(/,/g, "");
+    const amountWithoutCommas = sellInfo.value.goldPrice
+      .toString()
+      .replace(/,/g, "");
     const amountInRial = parseInt(amountWithoutCommas, 10);
 
     if (amountInRial < 1) {
@@ -618,7 +638,7 @@ const buyGoldpriceConvert = () => {
 
 const buyGoldweightConvert = () => {
   buyInfo.value.goldWeight = buyInfo.value.goldWeight.replace(/[^0-9.]/g, "");
-  console.log(buyInfo.value.goldWeight)
+  console.log(buyInfo.value.goldWeight);
   const parts = buyInfo.value.goldWeight.split(".");
   if (parts.length > 1) {
     buyInfo.value.goldWeight = parts[0] + "." + parts.slice(1).join("");
@@ -1083,7 +1103,7 @@ onUnmounted(() => {
   border-radius: 10px !important;
 }
 
-.price-in-word{
+.price-in-word {
   font-size: 13px;
   color: #696969;
 }

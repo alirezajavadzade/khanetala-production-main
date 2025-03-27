@@ -142,8 +142,8 @@
         </v-alert>
 
 
-        <v-dialog v-model="depositDialog" width="auto">
-            <v-card min-width="350" max-width="400" class="cart-Dialog">
+        <v-dialog v-model="depositDialog" width="400">
+            <v-card  class="cart-Dialog">
                 <div class="my-1">
                     <p>مبلغ مورد نظر را جهت واریز وارد نمایید</p>
                 </div>
@@ -165,8 +165,8 @@
         </v-dialog>
 
 
-        <v-dialog v-model="withdrawDialog" width="auto">
-            <v-card min-width="350" max-width="400" class="cart-Dialog">
+        <v-dialog v-model="withdrawDialog" width="400">
+            <v-card  class="cart-Dialog">
                 <div class="title my-1">
                     <p>مبلغ مورد نظر را جهت برداشت وارد نمایید</p>
                 </div>
