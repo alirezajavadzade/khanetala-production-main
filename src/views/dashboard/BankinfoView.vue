@@ -5,11 +5,11 @@
             <v-col cols="12" md="6">
                 <div class="d-card asset">
                     <div class="d-flex justify-space-between align-center w-100">
-                        <p class="text">موجودی کیف پول ریالی : </p>
+                        <p class="text">موجودی کیف پول : </p>
                         <div class="d-flex flex-column justify-space-between h-100 align-end">
                             <v-progress-circular v-if="walletLoading" :size="10" color="#fff"
                                 indeterminate></v-progress-circular>
-                            <p class="price my-1" v-else>{{ formatNumber(wallet.balance) }} ریال</p>
+                            <p class="price my-1" v-else>{{ formatNumber(wallet.balance) }} تومان</p>
                             <v-progress-circular v-if="walletLoading" :size="10" color="#fff"
                                 indeterminate></v-progress-circular>
                             <p class="gold-price my-1" v-else>معادل {{ (wallet.balance /
@@ -37,7 +37,7 @@
                             <v-progress-circular v-if="walletLoading" :size="10" color="#fff"
                                 indeterminate></v-progress-circular>
                             <p class="gold-price my-1" v-else>معادل {{ formatNumber(wallet.goldWeight *
-                                goldPriceLive.buyPrice) }}ریال</p>
+                                goldPriceLive.buyPrice) }}تومان</p>
                         </div>
                     </div>
                     <div class="amount-card">
@@ -49,10 +49,10 @@
 
                             <!-- <p class="price my-1" v-else>{{ parseInt((wallet.goldWeight * goldPriceLive.buyPrice) +
                             (wallet.balance))
-                            }} ریال
+                            }} تومان
                         </p> -->
 
-                            <p class="price my-1" v-else>{{ formatNumber(wallet.TotalAssets) }} ریال</p>
+                            <p class="price my-1" v-else>{{ formatNumber(wallet.TotalAssets) }} تومان</p>
                         </div>
                         <div class="d-flex justify-space-between mt-2">
                             <p class="text">در انتظار پرداخت</p>
@@ -62,10 +62,10 @@
 
                             <!-- <p class="price my-1" v-else>{{ parseInt((wallet.goldWeight * goldPriceLive.buyPrice) +
                             (wallet.balance))
-                            }} ریال
+                            }} تومان
                         </p> -->
 
-                            <p class="price my-1" v-else>{{ formatNumber(wallet.blocked) }} ریال</p>
+                            <p class="price my-1" v-else>{{ formatNumber(wallet.blocked) }} تومان</p>
                         </div>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                 </div>
                 <v-form ref="form" v-model="isValidcharge" @submit.prevent="deposit">
                     <v-text-field v-model="priceAmount" variant="outlined" color="rgba(135, 104, 36, 1)"
-                        density="compact" label="مبلغ (ریال)" class="mb-0 mt-2" :rules="validatePrice"
+                        density="compact" label="مبلغ (تومان)" class="mb-0 mt-2" :rules="validatePrice"
                         @input="limitInput"></v-text-field>
                     <div v-if="priceAmount">
                         <p class="amount-word">{{ DepositeAmountInWords }}</p>
@@ -172,7 +172,7 @@
                 </div>
                 <v-form ref="form" v-model="isValidPrice" @submit.prevent="withdraw">
                     <v-text-field v-model="withdrawAmount" variant="outlined" color="rgba(135, 104, 36, 1)"
-                        density="compact" label="مبلغ (ریال)" class="mb-0 mt-2" :rules="validatePrice"
+                        density="compact" label="مبلغ (تومان)" class="mb-0 mt-2" :rules="validatePrice"
                         @input="limitWithdrawInput"></v-text-field>
                     <div v-if="withdrawAmount">
                         <p class="amount-word">{{ amountInWords }}</p>
@@ -244,7 +244,7 @@ const Transactionheaders = ref([
         key: 'time',
     },
     {
-        title: 'مقدار(ریال)',
+        title: 'مقدار(تومان)',
         key: 'amount',
     },
     {
@@ -462,13 +462,12 @@ const amountInWords = computed(() => {
     if (withdrawAmount.value) {
         const amountWithoutCommas = withdrawAmount.value.replace(/,/g, '');
         const amountInRial = parseInt(amountWithoutCommas, 10);
-        const amountInToman = amountInRial / 10;
 
-        if (amountInToman < 1) {
+        if (amountInRial < 1) {
             return 'کمتر از یک تومان';
         }
 
-        return numberToWords(Math.floor(amountInToman)) + ' تومان';
+        return numberToWords(Math.floor(amountInRial)) + ' تومان';
     }
     return '';
 });
@@ -478,12 +477,11 @@ const DepositeAmountInWords = computed(() => {
     if (priceAmount.value) {
         const amountWithoutCommas = priceAmount.value.replace(/,/g, '');
         const amountInRial = parseInt(amountWithoutCommas, 10);
-        const amountInToman = amountInRial / 10;
-        if (amountInToman < 1) {
+        if (amountInRial < 1) {
             return 'کمتر از یک تومان';
         }
 
-        return numberToWords(Math.floor(amountInToman)) + ' تومان';
+        return numberToWords(Math.floor(amountInRial)) + ' تومان';
     }
     return '';
 });

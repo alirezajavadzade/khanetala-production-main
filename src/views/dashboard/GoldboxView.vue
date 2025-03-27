@@ -12,7 +12,7 @@
                 </div>
                 <div>
                     <span class="my-2 live-price-text">قیمت لحظه ای طلا 18 عیار</span>
-                    <span class="live-price">{{ formatNumber(goldPriceLive.buyPrice) }} ریال</span>
+                    <span class="live-price">{{ formatNumber(goldPriceLive.buyPrice) }} تومان</span>
                 </div>
             </div>
             <v-tabs v-model="tab" bg-color="white" class="tab-header">
@@ -34,7 +34,7 @@
                                             @input="buyGoldweightConvert" :rules="validateWeight"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" md="6" class="my-2">
-                                        <span>مبلغ (ریال)</span>
+                                        <span>مبلغ (تومان)</span>
                                         <v-text-field v-model="buyInfo.goldprice" variant="outlined"
                                             color="rgba(135, 104, 36, 1)" density="compact"
                                             @input="buyGoldpriceConvert"></v-text-field>
@@ -55,7 +55,7 @@
                                     </div>
                                     <span class="my-2 live-price-text">قیمت لحظه ای طلا 18 عیار</span>
                                     <div class="d-flex justify-space-between my-2">
-                                        <span class="live-price">{{ formatNumber(goldPriceLive.buyPrice) }} ریال</span>
+                                        <span class="live-price">{{ formatNumber(goldPriceLive.buyPrice) }} تومان</span>
                                         <span class="weight-tag">1 گرم</span>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                             @input="sellGoldweightConvert" :rules="weightRules"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" md="6" class="my-2">
-                                        <span>مبلغ (ریال)</span>
+                                        <span>مبلغ (تومان)</span>
                                         <v-text-field v-model="sellInfo.goldPrice" variant="outlined"
                                             color="rgba(135, 104, 36, 1)" density="compact"
                                             @input="sellGoldpriceConvert"></v-text-field>
@@ -98,7 +98,7 @@
                                         <v-progress-circular v-if="GoldPriceLoading" :size="10" color="#fff"
                                             indeterminate></v-progress-circular>
                                         <span class="live-price" v-else>{{ formatNumber(goldPriceLive.buyPrice) }}
-                                            ریال</span>
+                                            تومان</span>
                                         <span class="weight-tag">1 گرم</span>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@
                     <h3>فاکتور خرید</h3>
                     <div class="wallet-badge my-2">
                         <span class="pe-6">موجودی کیف پول</span>
-                        <span>{{ paymentInfo.balance }} ریال</span>
+                        <span>{{ paymentInfo.balance }} تومان</span>
                     </div>
                     <div class="d-flex justify-space-evenly align-center w-100 my-2 k-text">
                         <p class="pe-6">مقدار طلا</p>
@@ -200,7 +200,7 @@
                     </div>
                     <div class="d-flex justify-space-evenly align-center w-100 my-2 k-text">
                         <p class="pe-6">مبلغ</p>
-                        <p>{{ buyInfo.goldprice }} ریال</p>
+                        <p>{{ buyInfo.goldprice }} تومان</p>
                     </div>
                     <div class="d-flex justify-space-evenly align-center w-100 my-2">
                         <span class="fee">کارمزد 0 درصد</span>
@@ -232,7 +232,7 @@
                     </div>
                     <div class="d-flex justify-space-evenly align-center w-100 my-2 k-text">
                         <p class="pe-6">مبلغ</p>
-                        <p>{{ sellInfo.goldPrice }} ریال</p>
+                        <p>{{ sellInfo.goldPrice }} تومان</p>
                     </div>
                     <div class="d-flex justify-space-evenly align-center w-100 my-2">
                         <span class="fee">کارمزد 1 درصد</span>
@@ -271,7 +271,6 @@ import router from '@/router';
 
 
 const route = useRoute();
-
 
 const tab = ref(null);
 const loading = ref(false);

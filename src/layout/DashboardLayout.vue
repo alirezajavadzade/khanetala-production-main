@@ -255,6 +255,7 @@ const GetUser = async () => {
   try {
     const response = await AuthService.Profile();
     user.value = response;
+    localStorage.setItem("user", JSON.stringify(user.value.wallet));
     if (response.isHaveBank == true) {
       haveBank.value = true;
     }

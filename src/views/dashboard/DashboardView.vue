@@ -11,7 +11,7 @@
         <div v-if="walletLoading" class="wallet-loading">
           <v-progress-circular color="white" indeterminate></v-progress-circular>
         </div>
-        <p v-else>{{ formatNumber(wallet.walletPrice) }} ریال</p>
+        <p v-else>{{ formatNumber(wallet.walletPrice) }} تومان</p>
         <div class="d-flex justify-space-around">
           <button class="k-btn" disabled>افزایش موجودی</button>
           <button class="k-btn-second" disabled>برداشت</button>
@@ -93,7 +93,7 @@
             v-if="ChartLoading"
           ></v-progress-circular>
           <p class="number" v-else>
-            {{ formatNumber(wallet.totalBalance) }} ریال
+            {{ formatNumber(wallet.totalBalance) }} تومان
           </p>
         </div>
       </div>
