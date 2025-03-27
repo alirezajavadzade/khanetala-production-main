@@ -7,7 +7,7 @@
             </div>
             <div class="content">
                 <p>مشکلی در پرداخت پیش آمده است!</p>
-                <div class="k-row">
+                <!-- <div class="k-row">
                     <p>عنوان:</p>
                     <p>خرید از مجموعه خانه طلا</p>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="k-row border-0">
                     <p>شناسه پرداخت:</p>
                     <p>{{ paymentDetail.referenceID }}</p>
-                </div>
+                </div> -->
             </div>
             <div>
                 <v-btn color="#876824" class="mt-2" @click="backHome">بازگشت به صفحه اصلی {{ timer }}</v-btn>
