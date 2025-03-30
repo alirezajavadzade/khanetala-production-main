@@ -70,10 +70,10 @@
               </v-col>
               <v-col cols="12" md="5" class="pa-0 my-2">
                 <div class="goldbox-section">
-                  <div class="Treasury-box">
+                  <!-- <div class="Treasury-box">
                     <p>موجودی خزانه :</p>
                     <p>15678 گرم</p>
-                  </div>
+                  </div> -->
                   <div class="wallet-box">
                     <p>موجودی کیف پول :</p>
                     <p>{{ formatNumber(walletUser.balance) }} تومان</p>
@@ -160,10 +160,10 @@
               </v-col>
               <v-col cols="12" md="5" class="pa-0 my-2">
                 <div class="goldbox-section">
-                  <div class="Treasury-box sell">
+                  <!-- <div class="Treasury-box sell">
                     <p>موجودی خزانه :</p>
                     <p>15678 گرم</p>
-                  </div>
+                  </div> -->
                   <div class="wallet-box sell">
                     <p>موجودی صندوق طلا :</p>
                     <p>{{ walletUser.goldWeight }} گرم</p>
