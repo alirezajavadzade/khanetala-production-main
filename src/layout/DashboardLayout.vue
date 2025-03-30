@@ -237,6 +237,7 @@ const limitCartInput = () => {
   cardNumber.value = cardNumber.value.replace(/\D/g, "").slice(0, 16);
 };
 
+
 const submitCart = async () => {
   try {
     cartLoading.value = true;
@@ -248,6 +249,7 @@ const submitCart = async () => {
     alertSuccess.value = true;
     setTimeout(() => {
       alertSuccess.value = false;
+      
     }, 10000);
     return response;
   } catch (error) {
